@@ -1,0 +1,40 @@
+local function espPart(part, text, color)
+    for i,v in pairs(getconnections(part.ChildAdded)) do
+        v:Disable()
+    end
+	local billgui = Instance.new('BillboardGui', part)
+	local textlab = Instance.new('TextLabel', billgui)
+
+	billgui.Name = "ESP"
+	billgui.AlwaysOnTop = true
+	billgui.ExtentsOffset = Vector3.new(0, 3, 0)
+	billgui.Size = UDim2.new(10, 0, 10, 0)
+    --billgui.MaxDistance = _G.maxdistance or 500
+
+	textlab.Name = 'Player'
+	textlab.BackgroundColor3 = Color3.new(255, 255, 255)
+	textlab.BackgroundTransparency = 1    
+	textlab.BorderSizePixel = 0
+	textlab.Position = UDim2.new(0, 0, 0, 0)
+	textlab.Size = UDim2.new(1, 0, 1, 0)
+	textlab.Visible = true
+	textlab.ZIndex = 10
+	textlab.Font = 'SciFi'
+	textlab.FontSize = 'Size14'
+	textlab.Text = text
+	textlab.TextTransparency = 0
+	textlab.TextStrokeTransparency = 1
+	textlab.TextColor3 = color
+end
+
+for i,v in pairs(workspace.TempMap.Main.Relics:GetChildren()) do
+    if v:IsA("MeshPart") and v.Name == "Relic" then
+        espPart(v, "Relic", Color3.new(0, 204, 255))
+    end
+end
+
+workspace.DescendantAdded:Connect(function(v)
+    if v:IsA("MeshPart") and v.Name == "Relic" then
+        espPart(v, "Relic", Color3.new(0, 204, 255))
+    end
+end)
